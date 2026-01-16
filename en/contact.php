@@ -15,7 +15,7 @@ $form_success = false;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Verify CSRF token
     if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-        $form_error = 'Error de seguridad. Por favor, recarga la página e intenta de nuevo.';
+        $form_error = 'Security error. Please reload the page and try again.';
     } else {
         // Sanitize and validate inputs
         $nombre = filter_input(INPUT_POST, 'nombre', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -25,24 +25,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Validate required fields
         if (empty($nombre)) {
-            $form_error = 'Por favor, ingresa tu nombre.';
+            $form_error = 'Please enter your name.';
         } elseif (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $form_error = 'Por favor, ingresa un email válido.';
+            $form_error = 'Please enter a valid email address.';
         } else {
             // Process the form using MailHelper
-            require_once 'includes/MailHelper.php';
+            require_once '../includes/MailHelper.php';
 
-            $subject = "Nuevo Contacto de $nombre - Datapolis Web";
+            $subject = "New Contact from $nombre - Datapolis Web (EN)";
 
             // HTML Email Body
             $htmlContent = "
                 <div style='font-family: Arial, sans-serif; padding: 20px; background-color: #f9f9f9; border: 1px solid #ddd;'>
-                    <h2 style='color: #444cf7;'>Nuevo Mensaje de Contacto Web</h2>
-                    <p><strong>Nombre:</strong> $nombre</p>
+                    <h2 style='color: #444cf7;'>New Message from Web Contact (EN)</h2>
+                    <p><strong>Name:</strong> $nombre</p>
                     <p><strong>Email:</strong> <a href='mailto:$email'>$email</a></p>
-                    <p><strong>Teléfono:</strong> $telefono</p>
+                    <p><strong>Phone:</strong> $telefono</p>
                     <hr>
-                    <p><strong>Mensaje:</strong></p>
+                    <p><strong>Message:</strong></p>
                     <div style='background-color: white; padding: 15px; border-left: 4px solid #444cf7;'>
                         " . nl2br($mensaje) . "
                     </div>
@@ -50,11 +50,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ";
 
             // Plain Text Body (Fallback)
-            $plainContent = "Nuevo Mensaje de Contacto\n\n";
-            $plainContent .= "Nombre: $nombre\n";
+            $plainContent = "New Message from Web Contact (EN)\n\n";
+            $plainContent .= "Name: $nombre\n";
             $plainContent .= "Email: $email\n";
-            $plainContent .= "Teléfono: $telefono\n";
-            $plainContent .= "Mensaje: $mensaje\n";
+            $plainContent .= "Phone: $telefono\n";
+            $plainContent .= "Message: $mensaje\n";
 
             // Send email (Reply-To set to user's email)
             if (MailHelper::send($subject, $htmlContent, $plainContent, $email, $nombre)) {
@@ -63,17 +63,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Regenerate CSRF token after successful submission
                 $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
             } else {
-                $form_error = 'Hubo un error técnico al enviar tu mensaje. Por favor intenta más tarde o contáctanos por WhatsApp.';
+                $form_error = 'There was a technical error sending your message. Please try again later or contact us via WhatsApp.';
             }
         }
     }
 }
 
-$page_title = "Contacto | Datapolis - Hablemos de tu Proyecto IA";
-$page_description = "Contacta a Datapolis para que te asesoremos sobre soluciones de Inteligencia Artificial para tu PyME.";
-$current_page = "contacto";
+$page_title = "Contact | Datapolis - Let's talk AI";
+$page_description = "Contact Datapolis for expert advice on Artificial Intelligence solutions for your SME.";
+$current_page = "contact";
+$es_page_link = "contacto.php";
 
-include 'includes/header.php';
+include '../includes/header_en.php';
 ?>
 
 <!-- Hero Section -->
@@ -88,10 +89,10 @@ include 'includes/header.php';
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div class="text-center">
             <h1 class="font-heading text-5xl sm:text-6xl lg:text-7xl font-bold mb-6">
-                <span class="gradient-text">Conversemos</span>
+                <span class="gradient-text">Let's Talk</span>
             </h1>
             <p class="text-xl text-muted max-w-2xl mx-auto mb-8">
-                Estamos listos para ayudarte a dar el salto hacia la IA
+                We are ready to help you take the leap into AI
             </p>
             <!-- Decorative Line -->
             <div class="w-24 h-1 gradient-bg mx-auto rounded-full"></div>
@@ -106,7 +107,7 @@ include 'includes/header.php';
             <!-- Left Column - Info -->
             <div>
                 <div class="bg-primary text-white p-8 rounded-2xl border-l-4 border-accent mb-8">
-                    <h2 class="font-heading text-2xl font-bold mb-6">Información de Contacto</h2>
+                    <h2 class="font-heading text-2xl font-bold mb-6">Contact Information</h2>
 
                     <div class="space-y-6">
                         <!-- Hours -->
@@ -116,9 +117,9 @@ include 'includes/header.php';
                                 <i class="fas fa-clock text-accent" aria-hidden="true"></i>
                             </div>
                             <div>
-                                <h3 class="font-semibold mb-1">Horario de Atención</h3>
-                                <p class="text-muted text-sm">Lunes a Viernes: 08:30 - 17:30</p>
-                                <p class="text-muted text-sm">Sábado: 10:00 - 14:00</p>
+                                <h3 class="font-semibold mb-1">Opening Hours</h3>
+                                <p class="text-muted text-sm">Monday to Friday: 08:30 - 17:30</p>
+                                <p class="text-muted text-sm">Saturday: 10:00 - 14:00</p>
                             </div>
                         </div>
 
@@ -129,8 +130,8 @@ include 'includes/header.php';
                                 <i class="fas fa-map-marker-alt text-accent" aria-hidden="true"></i>
                             </div>
                             <div>
-                                <h3 class="font-semibold mb-1">Ubicación</h3>
-                                <p class="text-muted text-sm">Av. Providencia 1234, Oficina 501</p>
+                                <h3 class="font-semibold mb-1">Location</h3>
+                                <p class="text-muted text-sm">Av. Providencia 1234, Office 501</p>
                                 <p class="text-muted text-sm">Providencia, Santiago, Chile</p>
                             </div>
                         </div>
@@ -158,10 +159,10 @@ include 'includes/header.php';
                             </div>
                             <div>
                                 <h3 class="font-semibold mb-1">WhatsApp</h3>
-                                <a href="https://wa.me/56912345678?text=Hola!%20Me%20interesa%20conocer%20más%20sobre%20sus%20servicios%20de%20IA"
+                                <a href="https://wa.me/56912345678?text=Hello!%20I%20am%20interested%20in%20your%20AI%20services"
                                     class="text-accent hover:text-white transition-colors" rel="noopener noreferrer"
                                     target="_blank">
-                                    Escríbenos por WhatsApp
+                                    Chat on WhatsApp
                                 </a>
                             </div>
                         </div>
@@ -171,27 +172,27 @@ include 'includes/header.php';
                     <div class="mt-8 p-4 rounded-lg bg-accent/10 border border-accent/30">
                         <p class="text-sm">
                             <i class="fas fa-lightbulb text-accent mr-2" aria-hidden="true"></i>
-                            <span class="text-muted">Ofrecemos consultorías virtuales para clientes en Regiones</span>
+                            <span class="text-muted">We offer virtual consultations for clients outside Santiago</span>
                         </p>
                     </div>
 
                     <!-- Social Links -->
                     <div class="mt-8 pt-6 border-t border-white/10">
-                        <h3 class="font-semibold mb-4">Síguenos</h3>
+                        <h3 class="font-semibold mb-4">Follow Us</h3>
                         <div class="flex space-x-4">
                             <a href="https://linkedin.com/company/datapolis"
                                 class="w-12 h-12 rounded-full bg-secondary flex items-center justify-center text-muted hover:text-accent hover:bg-accent/20 transition-all"
-                                aria-label="LinkedIn de Datapolis" rel="noopener noreferrer" target="_blank">
+                                aria-label="Datapolis LinkedIn" rel="noopener noreferrer" target="_blank">
                                 <i class="fab fa-linkedin-in text-xl" aria-hidden="true"></i>
                             </a>
                             <a href="https://instagram.com/datapolis"
                                 class="w-12 h-12 rounded-full bg-secondary flex items-center justify-center text-muted hover:text-accent hover:bg-accent/20 transition-all"
-                                aria-label="Instagram de Datapolis" rel="noopener noreferrer" target="_blank">
+                                aria-label="Datapolis Instagram" rel="noopener noreferrer" target="_blank">
                                 <i class="fab fa-instagram text-xl" aria-hidden="true"></i>
                             </a>
                             <a href="https://github.com/datapolis"
                                 class="w-12 h-12 rounded-full bg-secondary flex items-center justify-center text-muted hover:text-accent hover:bg-accent/20 transition-all"
-                                aria-label="GitHub de Datapolis" rel="noopener noreferrer" target="_blank">
+                                aria-label="Datapolis GitHub" rel="noopener noreferrer" target="_blank">
                                 <i class="fab fa-github text-xl" aria-hidden="true"></i>
                             </a>
                         </div>
@@ -205,7 +206,7 @@ include 'includes/header.php';
                     <!-- Gradient Top Border -->
                     <div class="absolute top-0 left-0 right-0 h-1 gradient-bg"></div>
 
-                    <h2 class="font-heading text-2xl font-bold text-white mb-6">Cuéntanos sobre tu proyecto</h2>
+                    <h2 class="font-heading text-2xl font-bold text-white mb-6">Tell us about your project</h2>
 
                     <?php if ($form_success): ?>
                         <!-- Success Message -->
@@ -213,10 +214,10 @@ include 'includes/header.php';
                             <div class="w-16 h-16 rounded-full bg-green-500 flex items-center justify-center mx-auto mb-4">
                                 <i class="fas fa-check text-white text-2xl" aria-hidden="true"></i>
                             </div>
-                            <h3 class="font-heading text-xl font-bold text-white mb-2">¡Mensaje Enviado!</h3>
-                            <p class="text-muted">Gracias por contactarnos. Te responderemos a la brevedad.</p>
-                            <a href="contacto.php" class="inline-block mt-4 text-accent hover:text-white transition-colors">
-                                <i class="fas fa-arrow-left mr-2" aria-hidden="true"></i> Enviar otro mensaje
+                            <h3 class="font-heading text-xl font-bold text-white mb-2">Message Sent!</h3>
+                            <p class="text-muted">Thank you for contacting us. We will get back to you shortly.</p>
+                            <a href="contact.php" class="inline-block mt-4 text-accent hover:text-white transition-colors">
+                                <i class="fas fa-arrow-left mr-2" aria-hidden="true"></i> Send another message
                             </a>
                         </div>
                     <?php else: ?>
@@ -231,7 +232,7 @@ include 'includes/header.php';
                             </div>
                         <?php endif; ?>
 
-                        <form action="contacto.php" method="POST" class="space-y-6" novalidate>
+                        <form action="contact.php" method="POST" class="space-y-6" novalidate>
                             <!-- CSRF Token -->
                             <input type="hidden" name="csrf_token"
                                 value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
@@ -244,11 +245,11 @@ include 'includes/header.php';
                             <!-- Name -->
                             <div>
                                 <label for="nombre" class="block text-sm font-medium text-muted mb-2">
-                                    Nombre completo <span class="text-accent">*</span>
+                                    Full Name <span class="text-accent">*</span>
                                 </label>
                                 <input type="text" id="nombre" name="nombre" required
                                     class="w-full px-4 py-3 bg-secondary/50 border border-white/10 rounded-lg text-white placeholder-muted focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-all"
-                                    placeholder="Tu nombre"
+                                    placeholder="Your Name"
                                     value="<?php echo isset($_POST['nombre']) ? htmlspecialchars($_POST['nombre']) : ''; ?>">
                             </div>
 
@@ -259,14 +260,14 @@ include 'includes/header.php';
                                 </label>
                                 <input type="email" id="email" name="email" required
                                     class="w-full px-4 py-3 bg-secondary/50 border border-white/10 rounded-lg text-white placeholder-muted focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-all"
-                                    placeholder="tu@empresa.cl"
+                                    placeholder="you@company.com"
                                     value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
                             </div>
 
                             <!-- Phone -->
                             <div>
                                 <label for="telefono" class="block text-sm font-medium text-muted mb-2">
-                                    Teléfono
+                                    Phone
                                 </label>
                                 <input type="tel" id="telefono" name="telefono"
                                     class="w-full px-4 py-3 bg-secondary/50 border border-white/10 rounded-lg text-white placeholder-muted focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-all"
@@ -277,23 +278,23 @@ include 'includes/header.php';
                             <!-- Message -->
                             <div>
                                 <label for="mensaje" class="block text-sm font-medium text-muted mb-2">
-                                    Cuéntanos sobre tu proyecto
+                                    Tell us about your project
                                 </label>
                                 <textarea id="mensaje" name="mensaje" rows="4"
                                     class="w-full px-4 py-3 bg-secondary/50 border border-white/10 rounded-lg text-white placeholder-muted focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-all resize-none"
-                                    placeholder="Describe brevemente qué problema buscas resolver o qué proceso quieres mejorar..."><?php echo isset($_POST['mensaje']) ? htmlspecialchars($_POST['mensaje']) : ''; ?></textarea>
+                                    placeholder="Briefly describe what problem you want to solve or what process you want to improve..."><?php echo isset($_POST['mensaje']) ? htmlspecialchars($_POST['mensaje']) : ''; ?></textarea>
                             </div>
 
                             <!-- Submit -->
                             <button type="submit"
                                 class="w-full py-4 rounded-lg gradient-bg font-bold text-lg uppercase tracking-wider hover-scale flex items-center justify-center space-x-2">
-                                <span>Enviar Mensaje</span>
+                                <span>Send Message</span>
                                 <i class="fas fa-paper-plane" aria-hidden="true"></i>
                             </button>
 
                             <p class="text-xs text-muted text-center">
-                                Al enviar este formulario, aceptas nuestros <a href="terminos.php"
-                                    class="text-accent hover:underline">Términos de uso</a>
+                                By submitting this form, you accept our <a href="terms.php"
+                                    class="text-accent hover:underline">Terms of Use</a>
                             </p>
                         </form>
                     <?php endif; ?>
@@ -308,9 +309,9 @@ include 'includes/header.php';
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
             <h2 class="font-heading text-3xl sm:text-4xl font-bold mb-4">
-                Cómo <span class="gradient-text">Llegar</span>
+                How to <span class="gradient-text">Find Us</span>
             </h2>
-            <p class="text-muted">Estamos en el corazón de Providencia, Santiago</p>
+            <p class="text-muted">We are located in the heart of Providencia, Santiago</p>
         </div>
 
         <div class="rounded-2xl overflow-hidden border border-white/10">
@@ -319,7 +320,7 @@ include 'includes/header.php';
                 width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade"
                 class="grayscale hover:grayscale-0 transition-all duration-500"
-                title="Ubicación de Datapolis en Google Maps"></iframe>
+                title="Datapolis Location on Google Maps"></iframe>
         </div>
 
         <div class="grid md:grid-cols-3 gap-8 mt-12">
@@ -328,8 +329,8 @@ include 'includes/header.php';
                     <i class="fas fa-subway text-accent" aria-hidden="true"></i>
                 </div>
                 <div>
-                    <h3 class="font-semibold mb-1">Metro</h3>
-                    <p class="text-muted text-sm">Línea 1, estación Pedro de Valdivia a 5 min caminando</p>
+                    <h3 class="font-semibold mb-1">Subway / Metro</h3>
+                    <p class="text-muted text-sm">Line 1, Pedro de Valdivia station (5 min walk)</p>
                 </div>
             </div>
 
@@ -338,8 +339,8 @@ include 'includes/header.php';
                     <i class="fas fa-car text-accent" aria-hidden="true"></i>
                 </div>
                 <div>
-                    <h3 class="font-semibold mb-1">Estacionamiento</h3>
-                    <p class="text-muted text-sm">Estacionamiento público disponible en el edificio</p>
+                    <h3 class="font-semibold mb-1">Parking</h3>
+                    <p class="text-muted text-sm">Public parking available in the building</p>
                 </div>
             </div>
 
@@ -348,12 +349,12 @@ include 'includes/header.php';
                     <i class="fas fa-video text-accent" aria-hidden="true"></i>
                 </div>
                 <div>
-                    <h3 class="font-semibold mb-1">Reuniones Virtuales</h3>
-                    <p class="text-muted text-sm">También disponibles vía Zoom o Google Meet</p>
+                    <h3 class="font-semibold mb-1">Virtual Meetings</h3>
+                    <p class="text-muted text-sm">Also available via Zoom or Google Meet</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<?php include 'includes/footer.php'; ?>
+<?php include '../includes/footer_en.php'; ?>

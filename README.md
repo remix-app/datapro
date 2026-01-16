@@ -72,7 +72,7 @@ $site_url = 'https://tu-dominio.cl';
 
 ## 📄 Licencia
 
-© 2026 Datapolis. Todos los derechos reservados.
+2026 - Hecho en 🇨🇱  por Datapolis. Todos los derechos reservados.
 
 ---
 
