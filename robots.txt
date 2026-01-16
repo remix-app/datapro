@@ -1,0 +1,9 @@
+# Datapolis - robots.txt
+# Archivo para controlar el acceso de los motores de búsqueda
+
+User-agent: *
+Allow: /
+Disallow: /includes/
+
+# Sitemap
+Sitemap: https://datapolis.cl/sitemap.xml

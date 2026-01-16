@@ -1,0 +1,158 @@
+/* ============================================
+   DATAPOLIS - Custom Styles
+   ============================================ */
+
+/* Base Typography */
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+/* ============================================
+   Gradient Effects
+   ============================================ */
+.gradient-text {
+    background: linear-gradient(135deg, #00d4ff 0%, #7c3aed 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.gradient-bg {
+    background: linear-gradient(135deg, #00d4ff 0%, #7c3aed 100%);
+}
+
+.gradient-border {
+    background: linear-gradient(135deg, #00d4ff 0%, #7c3aed 100%);
+}
+
+/* ============================================
+   Interactive Elements
+   ============================================ */
+.hover-scale {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-scale:hover {
+    transform: scale(1.05);
+    box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+}
+
+/* ============================================
+   Navigation Styles
+   ============================================ */
+.nav-link {
+    position: relative;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(135deg, #00d4ff 0%, #7c3aed 100%);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+/* ============================================
+   Card Styles
+   ============================================ */
+.card-hover {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    margin-top: 5%;
+    margin-bottom: 5%;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+.card-hover:hover {
+    transform: translateY(-4px);
+    border-color: #00d4ff;
+}
+
+.card-hover:hover .card-image {
+    transform: scale(1.1);
+}
+
+/* ============================================
+   Mobile Menu
+   ============================================ */
+.hamburger-line {
+    transition: all 0.3s ease;
+}
+
+.menu-open .hamburger-line:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.menu-open .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-open .hamburger-line:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+}
+
+/* ============================================
+   Animations
+   ============================================ */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.float-animation {
+    animation: float 3s ease-in-out infinite;
+}
+
+/* ============================================
+   Logo Sizing
+   ============================================ */
+.logo-class {
+    max-width: 33%;
+}
+
+.logo-footer {
+    max-width: 100%;
+}
+
+/* ============================================
+   Focus States for Accessibility
+   ============================================ */
+a:focus,
+button:focus,
+input:focus,
+textarea:focus,
+select:focus {
+    outline: 2px solid #00d4ff;
+    outline-offset: 2px;
+}
+
+/* ============================================
+   Skip to Content (Accessibility)
+   ============================================ */
+.skip-to-content {
+    position: absolute;
+    left: -9999px;
+    z-index: 9999;
+    padding: 1em;
+    background-color: #0a1628;
+    color: #00d4ff;
+    text-decoration: none;
+}
+
+.skip-to-content:focus {
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0;
+}
