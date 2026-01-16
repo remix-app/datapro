@@ -1,0 +1,28 @@
+# Ignorar archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Ignorar archivos de configuración local
+*.log
+*.bak
+*.swp
+*.tmp
+
+# Ignorar directorios de IDEs
+.idea/
+.vscode/
+*.sublime-*
+
+# Ignorar dependencias (si se agregan en el futuro)
+/node_modules/
+/vendor/
+
+# Ignorar archivos de entorno
+.env
+.env.local
+.env.*.local
+
+# Ignorar archivos de caché PHP
+*.cache
+/cache/
+includes/email_config.php
